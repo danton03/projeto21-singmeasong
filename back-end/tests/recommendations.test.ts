@@ -12,21 +12,13 @@ afterAll(async () => {
 
 describe("Testa a rota POST /recommendations", () => {
 	it("Cria uma nova recomendação e retorna 201", async () => {
-		const newRecommendation = recommendationFactory.createRecommendation();
-		const result = await supertest(app)
-			.post("/recommendations")
-			.send(newRecommendation);
+		const result = await createRecommendation();
 		expect(result.status).toEqual(201);
 	});
 
 	it("Deve retorna erro 409 ao criar uma recomendação com o mesmo nome", async () => {
-		const newRecommendation = recommendationFactory.createRecommendation();
-		await supertest(app)
-			.post("/recommendations")
-			.send(newRecommendation);
-		const result = await supertest(app)
-			.post("/recommendations")
-			.send(newRecommendation);
+		await createRecommendation();
+		const result = await createRecommendation();
 		expect(result.status).toEqual(409);
 	});
 
@@ -38,3 +30,24 @@ describe("Testa a rota POST /recommendations", () => {
 		expect(result.status).toEqual(422);
 	});
 });
+
+describe("Testa a rota POST /recommendations/:id/upvote", () => {
+	it("Deve retornar status 200 ao adiciona um upvote na recomendação", async () => {
+		await createRecommendation();
+		const result = await supertest(app).post("/recommendations/1/upvote");
+		expect(result.status).toEqual(200);
+	});
+
+	it("Deve retornar status 404 ao dar upvote em uma recomendação inexistente", async () => {
+		const result = await supertest(app).post("/recommendations/5/upvote");
+		expect(result.status).toEqual(404);
+	});
+});
+
+async function createRecommendation() {
+	const newRecommendation = recommendationFactory.createRecommendation();
+	const result = await supertest(app)
+		.post("/recommendations")
+		.send(newRecommendation);
+	return result;
+}
