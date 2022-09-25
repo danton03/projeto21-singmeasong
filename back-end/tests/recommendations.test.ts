@@ -117,6 +117,20 @@ describe("Testa a rota GET /recommendations/random", () => {
 	});
 });
 
+describe("Testa a rota GET /recommendations/top/:amount", () => {
+	it("Deve retornar as X recomendações com mais votos", async () => {
+		await generateTenRecommendations();
+		await generateUpvotes();
+
+		const result = await supertest(app).get(`/recommendations/top/${3}`);
+
+		expect(result.body).toBeInstanceOf(Array);
+		expect(result.body.length).toEqual(3);
+		expect(result.body[0].score).toBeGreaterThanOrEqual(result.body[1].score);
+		expect(result.body[1].score).toBeGreaterThanOrEqual(result.body[2].score);
+	});
+});
+
 async function createRecommendation(
 	newRecommendation: recommendationFactory.IRecommendation
 ) {
@@ -142,4 +156,14 @@ async function generateTenRecommendations() {
 	await createRecommendation(recommendationFactory.createRecommendation());
 	await createRecommendation(recommendationFactory.createRecommendation());
 	await createRecommendation(recommendationFactory.createRecommendation());
+}
+
+async function generateUpvotes() {
+	await supertest(app).post("/recommendations/1/upvote");
+	await supertest(app).post("/recommendations/1/upvote");
+	await supertest(app).post("/recommendations/1/upvote");
+	await supertest(app).post("/recommendations/1/upvote");
+	await supertest(app).post("/recommendations/3/upvote");
+	await supertest(app).post("/recommendations/3/upvote");
+	await supertest(app).post("/recommendations/2/upvote");
 }
