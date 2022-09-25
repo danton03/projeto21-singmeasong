@@ -91,10 +91,28 @@ describe("Testa a rota GET /recommendations/:id", () => {
 		await createRecommendation(newRecommendation);
 		const result = await supertest(app).get("/recommendations/1");
 		expect(result.body).toBeInstanceOf(Object);
+		expect(Object.keys(result.body).length).toBeGreaterThan(0);
 	});
 
 	it("Deve retornar 404 ao não encontrar a recomendação com o ID enviado", async () => {
 		const result = await supertest(app).get("/recommendations/1");
+		expect(result.status).toEqual(404);
+	});
+});
+
+describe("Testa a rota GET /recommendations/random", () => {
+	it("Retorna com sucesso uma recomendação aleatória", async () => {
+		const newRecommendation = recommendationFactory.createRecommendation();
+		await createRecommendation(newRecommendation);
+		const result = await supertest(app).get("/recommendations/random");
+
+		expect(result.body).toBeInstanceOf(Object);
+		expect(Object.keys(result.body).length).toBeGreaterThan(0);
+	});
+
+	it("Deve retornar status 404 se não houver recomendações cadastradas", async () => {
+		const result = await supertest(app).get("/recommendations/random");
+
 		expect(result.status).toEqual(404);
 	});
 });
