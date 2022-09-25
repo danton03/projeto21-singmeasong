@@ -1,6 +1,11 @@
 import { faker } from "@faker-js/faker";
 
-export function createRecommendation() {
+export interface IRecommendation {
+  name: string,
+  youtubeLink: string
+}
+
+export function createRecommendation(): IRecommendation {
 	return {
 		name: faker.lorem.words(2),
 		youtubeLink: `https://www.youtube.com/watch?v=${faker.lorem.word(11)}`,
@@ -9,7 +14,7 @@ export function createRecommendation() {
 
 export function invalidRecommendation() {
 	return {
-		name: 1234,
+		name: "",
 		youtubeLink: "https://www.google.com/",
 	};
 }
