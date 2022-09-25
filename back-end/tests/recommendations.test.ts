@@ -85,6 +85,20 @@ describe("Testa a rota GET /recommendations", () => {
 	});
 });
 
+describe("Testa a rota GET /recommendations/:id", () => {
+	it("Deve retornar uma recomendação buscada pelo ID", async () => {
+		const newRecommendation = recommendationFactory.createRecommendation();
+		await createRecommendation(newRecommendation);
+		const result = await supertest(app).get("/recommendations/1");
+		expect(result.body).toBeInstanceOf(Object);
+	});
+
+	it("Deve retornar 404 ao não encontrar a recomendação com o ID enviado", async () => {
+		const result = await supertest(app).get("/recommendations/1");
+		expect(result.status).toEqual(404);
+	});
+});
+
 async function createRecommendation(
 	newRecommendation: recommendationFactory.IRecommendation
 ) {
