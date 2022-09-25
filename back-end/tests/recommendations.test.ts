@@ -76,6 +76,15 @@ describe("Testa a rota POST /recommendations/:id/downvote", () => {
 	});
 });
 
+describe("Testa a rota GET /recommendations", () => {
+	it("Deve retornar somente as 10 últimas recomendações", async () => {
+		await generateTenRecommendations();
+		const result = await supertest(app).get("/recommendations");
+		expect(result.body).toBeInstanceOf(Array);
+		expect(result.body.length).toEqual(10);
+	});
+});
+
 async function createRecommendation(
 	newRecommendation: recommendationFactory.IRecommendation
 ) {
@@ -87,4 +96,18 @@ async function createRecommendation(
 
 async function sendDownvote(id: number) {
 	return await supertest(app).post(`/recommendations/${id}/downvote`);
+}
+
+async function generateTenRecommendations() {
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
+	await createRecommendation(recommendationFactory.createRecommendation());
 }
