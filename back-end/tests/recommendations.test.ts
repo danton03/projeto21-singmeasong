@@ -45,6 +45,37 @@ describe("Testa a rota POST /recommendations/:id/upvote", () => {
 	});
 });
 
+describe("Testa a rota POST /recommendations/:id/downvote", () => {
+	it("Deve retornar status 200 após um downvote na recomendação", async () => {
+		const newRecommendation = recommendationFactory.createRecommendation();
+		await createRecommendation(newRecommendation);
+		const result = await supertest(app).post("/recommendations/1/downvote");
+
+		expect(result.status).toEqual(200);
+	});
+
+	it("Deve retornar 404 ao tentar dar downvote em uma recomendação inexistente", async () => {
+		const result = await supertest(app).post("/recommendations/5/downvote");
+		expect(result.status).toEqual(404);
+	});
+
+	it("Deve excluir uma recomendação após 6 downvotes e retornar 404 nas próximas tentativas", async () => {
+		const newRecommendation = recommendationFactory.createRecommendation();
+		await createRecommendation(newRecommendation);
+
+		await sendDownvote(1);
+		await sendDownvote(1);
+		await sendDownvote(1);
+		await sendDownvote(1);
+		await sendDownvote(1);
+		await sendDownvote(1);
+
+		const result = await sendDownvote(1);
+
+		expect(result.status).toEqual(404);
+	});
+});
+
 async function createRecommendation(
 	newRecommendation: recommendationFactory.IRecommendation
 ) {
@@ -52,4 +83,8 @@ async function createRecommendation(
 		.post("/recommendations")
 		.send(newRecommendation);
 	return result;
+}
+
+async function sendDownvote(id: number) {
+	return await supertest(app).post(`/recommendations/${id}/downvote`);
 }
