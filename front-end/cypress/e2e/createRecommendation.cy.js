@@ -4,13 +4,16 @@ beforeEach(() => {
 });
 
 describe("Teste E2E - Criar Recomendação", () => {
-	it("Testa se criação de uma recomendação corretamente", () => {
+	const recommendation = {
+		name: "Jean Tassy - Down",
+		link: "https://www.youtube.com/watch?v=KstyudD7NiU"
+	};
+
+	it("Testa se cria uma recomendação corretamente", () => {
 		cy.visit("http://localhost:3000");
 
-		cy.get("[data-cy=input-name]").type("Jean Tassy - Down");
-		cy.get("[data-cy=input-youtubeLink]").type(
-			"https://www.youtube.com/watch?v=KstyudD7NiU"
-		);
+		cy.get("[data-cy=input-name]").type(recommendation.name);
+		cy.get("[data-cy=input-youtubeLink]").type(recommendation.link);
 
 		cy.intercept("POST", "/recommendations").as("postRecommendation");
 		cy.intercept("GET", "/recommendations").as("getRecommendations");
@@ -21,5 +24,6 @@ describe("Teste E2E - Criar Recomendação", () => {
 		cy.wait("@getRecommendations");
 
 		cy.contains("Jean Tassy - Down");
+		cy.contains(recommendation.name).should("be.visible");
 	});
 });

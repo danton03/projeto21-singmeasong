@@ -28,3 +28,12 @@
 Cypress.Commands.add("resetDatabase", () => {
 	cy.request("POST", "http://localhost:5000/resetdb");
 });
+
+Cypress.Commands.add("createRecommendation", () => {
+	const recommendation = {
+		name: "Jean Tassy - Down",
+		youtubeLink: "https://www.youtube.com/watch?v=KstyudD7NiU",
+	};
+
+	cy.request("POST", "http://localhost:5000/recommendations", recommendation);
+});
