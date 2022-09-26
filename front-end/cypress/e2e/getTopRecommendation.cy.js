@@ -5,7 +5,7 @@ beforeEach(() => {
 });
 
 describe("Teste E2E - Lista o top 10 recomendações", () => {
-	it("Deve dar um upvote com sucesso", () => {
+	it("Deve ir para a página /top", () => {
 		cy.visit("http://localhost:3000");
 		
 		cy.intercept("GET", "/recommendations").as("getRecommendations");
