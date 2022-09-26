@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import { TCreateRecommendations } from "../../src/repositories/seedRepository";
 
 export interface INewRecommendation {
   name: string,
@@ -80,4 +81,18 @@ export function getSixRecommendations() {
 		},
 	];
 	return recommendations;
+}
+
+export function generateRecommendations(quantity: number) {
+	const recommendations = [];
+	for (let i = 0; i < quantity; i++) {
+		recommendations.push(
+			{
+				name: `recommendation ${i + 1}`,
+				youtubeLink: "https://www.youtube.com/watch?v=KstyudD7NiU",
+				score: faker.datatype.number({ min: -4, max: 50 })
+			}
+		);
+	}
+	return recommendations as TCreateRecommendations;
 }
