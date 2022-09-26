@@ -135,7 +135,7 @@ describe("Testa o recommendationsService - downvotes", () => {
 	});
 });
 
-describe("Testa o recommendationsService - get", () => {
+describe("Testa o recommendationsService - função get", () => {
 	it("Testa o get das últimas 10 recomendações", async () => {
 		const recommendations = [
 			recommendationFactory.getRecommendation(),
@@ -149,5 +149,17 @@ describe("Testa o recommendationsService - get", () => {
 		await recommendationService.get();
 
 		expect(recommendationRepository.findAll).toBeCalled();
+	});
+});
+
+describe("Testa o recommendationsService - função getTop", () => {
+	it("Testa o get do top X recomendações", async () => {
+		jest
+			.spyOn(recommendationRepository, "getAmountByScore")
+			.mockImplementationOnce((): any => {});
+
+		await recommendationService.getTop(3);
+
+		expect(recommendationRepository.getAmountByScore).toBeCalled();
 	});
 });
