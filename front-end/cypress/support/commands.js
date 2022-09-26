@@ -29,6 +29,10 @@ Cypress.Commands.add("resetDatabase", () => {
 	cy.request("POST", "http://localhost:5000/resetdb");
 });
 
+Cypress.Commands.add("seedDatabase", () => {
+	cy.request("POST", "http://localhost:5000/seed/recommendations");
+});
+
 Cypress.Commands.add("createRecommendation", () => {
 	const recommendation = {
 		name: "Jean Tassy - Down",

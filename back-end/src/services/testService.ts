@@ -4,7 +4,7 @@ import * as recommendationFactory from "../../tests/factories/recommendationsFac
 
 export async function populateDatabase() {
 	await seedRepository.createRecommendations(
-		recommendationFactory.generateRecommendations(6)
+		recommendationFactory.generateRecommendations(15)
 	);
 }
 

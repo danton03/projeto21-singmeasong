@@ -3,8 +3,8 @@ beforeEach(() => {
 	cy.resetDatabase();
 });
 
-describe("Teste E2E - Dar upvote em uma recomendação", () => {
-	it("Deve dar um upvote com sucesso", () => {
+describe("Teste E2E - Dar downvote em uma recomendação", () => {
+	it("Deve dar um downvote com sucesso", () => {
 		cy.visit("http://localhost:3000");
 
 		cy.createRecommendation();
