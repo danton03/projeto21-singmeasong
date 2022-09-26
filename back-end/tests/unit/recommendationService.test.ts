@@ -163,3 +163,54 @@ describe("Testa o recommendationsService - função getTop", () => {
 		expect(recommendationRepository.getAmountByScore).toBeCalled();
 	});
 });
+
+describe("Testa o recommendationsService - recomendações aleatórias", () => {
+	it("Testa o get para recomendações aleatórias com pontuação maior que 10", async () => {
+		const recommendations = recommendationFactory.getSixRecommendations();
+
+		jest.spyOn(Math, "random").mockReturnValueOnce(0.6); //gera scoreFilter "gt"
+
+		jest
+			.spyOn(Math, "floor")
+			.mockReturnValueOnce(2);
+
+		jest
+			.spyOn(recommendationRepository, "findAll")
+			.mockResolvedValueOnce(recommendations);
+
+		const result = await recommendationService.getRandom();
+		expect(result.score).toBeGreaterThan(10);
+		expect(recommendationRepository.findAll).toBeCalled();
+	});
+
+	it("Testa o get para recomendações aleatórias com pontuação menor ou igual a 10", async () => {
+		const recommendations = recommendationFactory.getSixRecommendations();
+
+		jest.spyOn(Math, "random").mockReturnValueOnce(0.9); //gera scoreFilter "lte"
+
+		jest
+			.spyOn(Math, "floor")
+			.mockReturnValueOnce(1);
+
+		jest
+			.spyOn(recommendationRepository, "findAll")
+			.mockResolvedValueOnce(recommendations);
+
+		const result = await recommendationService.getRandom();
+		expect(recommendationRepository.findAll).toBeCalled();
+		expect(result.score).toBeGreaterThanOrEqual(-5);
+		expect(result.score).toBeLessThanOrEqual(10);
+	});
+
+	it("Deve retornar erro quando não há recomendações cadastradas", async () => {
+		jest.spyOn(recommendationRepository, "findAll").mockResolvedValueOnce([]);
+		jest.spyOn(recommendationRepository, "findAll").mockResolvedValueOnce([]);
+		const promise = recommendationService.getRandom();
+		expect(promise).rejects.toEqual(
+			{
+				type: "not_found",
+				message: ""
+			}
+		);
+	});
+});

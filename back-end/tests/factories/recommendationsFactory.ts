@@ -45,3 +45,39 @@ export function invalidRecommendation() {
 		youtubeLink: "https://www.google.com/",
 	};
 }
+
+export function getSixRecommendations() {
+	const recommendations = [
+		{
+			id: 1,
+			name: "recommendation 1",
+			youtubeLink: "https://www.youtube.com/watch?v=KstyudD7NiU",
+			score: -2,
+		},
+		{
+			id: 2,
+			name: "recommendation 2",
+			youtubeLink: "https://www.youtube.com/watch?v=KstyudD7NiU",
+			score: 9,
+		},
+		{
+			id: 3,
+			name: "recommendation 3",
+			youtubeLink: "https://www.youtube.com/watch?v=KstyudD7NiU",
+			score: 27,
+		},
+		{
+			id: 4,
+			name: "recommendation 4",
+			youtubeLink: "https://www.youtube.com/watch?v=KstyudD7NiU",
+			score: 4,
+		},
+		{
+			id: 5,
+			name: "recommendation 5",
+			youtubeLink: "https://www.youtube.com/watch?v=KstyudD7NiU",
+			score: 85,
+		},
+	];
+	return recommendations;
+}
