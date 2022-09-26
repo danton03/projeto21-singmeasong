@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "dotenv -e .env.test nodemon src/server.ts",
-    "test:integration": "dotenv -e .env.test npx prisma migrate dev && dotenv -e .env.test jest --no-cache -i --testPathPattern=tests/unit",
+    "test:integration": "dotenv -e .env.test npx prisma migrate dev && dotenv -e .env.test jest -- --no-cache -i --testPathPattern=tests/integration",
     "test:unit": "dotenv -e .env.test npx prisma migrate dev && dotenv -e .env.test jest -- -i --coverage --testPathPattern=tests/unit",
     "eslint": "./node_modules/.bin/eslint --fix ."
   },

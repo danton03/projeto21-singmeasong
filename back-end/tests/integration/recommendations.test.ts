@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import app from "../../src/app";
 import { prisma } from "../../src/database";
-import * as recommendationFactory from "./factories/recommendationsFactory";
+import * as recommendationFactory from "../factories/recommendationsFactory";
 
 beforeEach(async () => {
 	await prisma.$executeRaw`TRUNCATE "recommendations" RESTART IDENTITY CASCADE`;
