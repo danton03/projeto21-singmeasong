@@ -1,6 +1,6 @@
-import * as e2eRepository from "../repositories/e2eRepository";
-import * as seedRepository from "../repositories/seedRepository";
-import * as recommendationFactory from "../../tests/factories/recommendationsFactory";
+import * as e2eRepository from "../repositories/e2eRepository.js";
+import * as seedRepository from "../repositories/seedRepository.js";
+import * as recommendationFactory from "../../tests/factories/recommendationsFactory.js";
 
 export async function populateDatabase() {
 	await seedRepository.createRecommendations(

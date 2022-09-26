@@ -4,7 +4,7 @@ import express from "express";
 import "express-async-errors";
 import { errorHandlerMiddleware } from "./middlewares/errorHandlerMiddleware.js";
 import recommendationRouter from "./routers/recommendationRouter.js";
-import testsRouter from "./routers/testsRouter";
+import testsRouter from "./routers/testsRouter.js";
 
 dotenv.config();
 
