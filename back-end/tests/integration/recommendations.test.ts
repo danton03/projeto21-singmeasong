@@ -132,7 +132,7 @@ describe("Testa a rota GET /recommendations/top/:amount", () => {
 });
 
 async function createRecommendation(
-	newRecommendation: recommendationFactory.IRecommendation
+	newRecommendation: recommendationFactory.INewRecommendation
 ) {
 	const result = await supertest(app)
 		.post("/recommendations")
