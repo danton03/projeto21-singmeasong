@@ -11,4 +11,10 @@ export default {
 	moduleNameMapper: {
 		"^(\\.{1,2}/.*)\\.js$": "$1",
 	},
+	coveragePathIgnorePatterns: [
+		"<rootDir>/src/utils", 
+		"<rootDir>/src/database.ts", 
+		"<rootDir>/src/repositories", 
+		"<rootDir>/tests/factories"
+	]
 };

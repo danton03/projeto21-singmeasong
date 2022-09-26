@@ -30,6 +30,15 @@ export function getRecommendation(): IRecommendation {
 	};
 }
 
+export function recommendationToDelete(): IRecommendation {
+	return {
+		id: 1,
+		name: faker.lorem.words(2),
+		youtubeLink: `https://www.youtube.com/watch?v=${faker.lorem.word(11)}`,
+		score: -6
+	};
+}
+
 export function invalidRecommendation() {
 	return {
 		name: "",
